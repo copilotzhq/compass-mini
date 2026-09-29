@@ -1,0 +1,28 @@
+html, body, #root { height: 100%; margin: 0; }
+
+.join {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: #070d1c;
+  color: #eaf2fa;
+  font-family: system-ui, sans-serif;
+}
+.join form {
+  width: min(380px, 100%);
+  display: grid;
+  gap: 12px;
+}
+.join h1 { margin: 0; font-size: 28px; }
+.join p { margin: 0; color: #8fa3bf; line-height: 1.5; }
+.join input, .join button {
+  font: inherit;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(214, 229, 245, 0.14);
+}
+.join input { background: #0e1a31; color: inherit; }
+.join button { background: #19f0e4; color: #040811; font-weight: 600; cursor: pointer; }
+.join button:disabled { opacity: 0.5; cursor: default; }
+.join small { color: #8fa3bf; }
