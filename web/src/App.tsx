@@ -1,34 +1,46 @@
 import { useState } from "react";
 import { CopilotzChat } from "@copilotz/chat-adapter";
-import type { AgentOption } from "@copilotz/chat-ui";
+import type { AgentOption, ChatConfig } from "@copilotz/chat-ui";
+
+/** A single-letter avatar in the agent's color, as an inline SVG. */
+const mark = (letter: string, color: string) =>
+  `data:image/svg+xml,${
+    encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#070d1c"/><circle cx="16" cy="16" r="14.5" fill="none" stroke="${color}" stroke-width="2"/><text x="16" y="21.5" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="${color}">${letter}</text></svg>`,
+    )
+  }`;
+
+const agent = (
+  id: string,
+  name: string,
+  description: string,
+  color: string,
+): AgentOption => ({
+  id,
+  name,
+  description,
+  color,
+  avatarUrl: mark(name[0], color),
+});
 
 const TEAM: AgentOption[] = [
-  {
-    id: "north",
-    name: "North",
-    description: "Holds the destination. Owns the decision.",
-    color: "#19f0e4",
-  },
-  {
-    id: "east",
-    name: "East",
-    description: "Builds the smallest real version.",
-    color: "#ffb547",
-  },
-  {
-    id: "south",
-    name: "South",
-    description: "Takes every claim to reality.",
-    color: "#ff5f7e",
-  },
-  {
-    id: "west",
-    name: "West",
-    description: "Finds the question it turns on.",
-    color: "#9d8cff",
-  },
+  agent("north", "North", "Holds the destination. Owns the decision.", "#19f0e4"),
+  agent("east", "East", "Builds the smallest real version.", "#ffb547"),
+  agent("south", "South", "Takes every claim to reality.", "#ff5f7e"),
+  agent("west", "West", "Finds the question it turns on.", "#9d8cff"),
 ];
 const TEAM_IDS = TEAM.map((agent) => agent.id);
+
+const CONFIG: ChatConfig = {
+  branding: {
+    title: "Compass Mini",
+    subtitle: "People and four agents, one room",
+  },
+  agentSelector: { enabled: true, mode: "multi" },
+  features: { spaces: { enabled: false } },
+  ui: { theme: "dark" },
+  labels: { inputPlaceholder: "Message the room…" },
+};
 const NAME_KEY = "compass-mini.name";
 
 function storedName(): string | null {
@@ -63,6 +75,7 @@ export function App() {
       userId={name}
       userName={name}
       baseUrl="/api"
+      config={CONFIG}
       getRequestHeaders={() => ({ "x-compass-user": name })}
       agentOptions={TEAM}
       participantIds={TEAM_IDS}
