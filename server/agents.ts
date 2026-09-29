@@ -14,7 +14,7 @@ const models = {
     connection: "openai",
     model: process.env.COMPASS_MODEL ?? "gpt-5.4-mini",
   }],
-};
+} as const;
 
 /** Portable tools every agent may use. Installing a tool never grants it. */
 const tools = ["get_current_time", "web_search", "fetch_text"];

@@ -12,7 +12,7 @@
     "smoke": "node scripts/smoke.ts",
     "dev:web": "vite --config web/vite.config.ts",
     "build": "vite build --config web/vite.config.ts",
-    "typecheck": "tsc -p web"
+    "typecheck": "tsc -p . && tsc -p web"
   },
   "dependencies": {
     "@copilotz/chat-adapter": "^0.82.1",
@@ -24,6 +24,7 @@
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",

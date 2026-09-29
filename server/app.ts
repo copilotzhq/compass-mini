@@ -6,6 +6,7 @@ import { defineServerFacade, serverPlugin } from "@copilotz/copilotz/server";
 import { builtInToolsPlugin } from "@copilotz/copilotz/tools/builtin";
 import { webToolsPlugin } from "@copilotz/copilotz/tools/web";
 import { agents, sharedInstructions } from "./agents.ts";
+import { roomTitlesPlugin } from "./room-titles.ts";
 
 const apiKey = process.env.OPENAI_API_KEY;
 if (!apiKey) throw new Error("Set OPENAI_API_KEY (see .env.example).");
@@ -76,6 +77,7 @@ export function createApp() {
       serverPlugin,
       builtInToolsPlugin,
       webToolsPlugin,
+      roomTitlesPlugin,
     ],
     resources: {
       agents,
