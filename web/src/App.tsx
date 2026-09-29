@@ -2,11 +2,11 @@ import { useState } from "react";
 import { CopilotzChat } from "@copilotz/chat-adapter";
 import type { AgentOption, ChatConfig } from "@copilotz/chat-ui";
 
-/** A single-letter avatar in the agent's color, as an inline SVG. */
+/** A single-letter avatar on the agent's color, readable on light and dark. */
 const mark = (letter: string, color: string) =>
   `data:image/svg+xml,${
     encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#070d1c"/><circle cx="16" cy="16" r="14.5" fill="none" stroke="${color}" stroke-width="2"/><text x="16" y="21.5" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="${color}">${letter}</text></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="${color}"/><text x="16" y="21.5" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="700" fill="#040811">${letter}</text></svg>`,
     )
   }`;
 
@@ -51,6 +51,12 @@ function storedName(): string | null {
   }
 }
 
+/** The participant id the server gives this name (see server/app.ts). */
+const personId = (name: string) =>
+  `person-${
+    name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+  }`;
+
 export function App() {
   const [name, setName] = useState(storedName);
   const [target, setTarget] = useState<string | null>("north");
@@ -72,7 +78,7 @@ export function App() {
 
   return (
     <CopilotzChat
-      userId={name}
+      userId={personId(name)}
       userName={name}
       baseUrl="/api"
       config={CONFIG}
