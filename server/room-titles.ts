@@ -33,14 +33,6 @@ async function textOf(content: unknown, reader: ContentReader): Promise<string> 
   return texts.join("").trim();
 }
 
-/** One text entry for an Action's content input. */
-const text = (value: string) => ({
-  kind: "text",
-  role: "body",
-  mediaType: "text/plain; charset=utf-8",
-  value,
-});
-
 /** A short, plain title: one line, no quotes or trailing punctuation. */
 function cleanTitle(value: string): string {
   return value.split("\n")[0]
@@ -93,19 +85,16 @@ const nameRoom = defineProcessor({
         messages: [
           {
             role: "system",
-            content: [text(
+            content:
               "You title chat rooms. You never answer or discuss the message; you only name it.",
-            )],
           },
           {
             role: "user",
             // The stored message content is reused as-is; no copy is made.
             content: [
-              text("A room starts with this message:\n\n"),
+              "A room starts with this message:\n\n",
               ...message.content,
-              text(
-                "\n\nGive the room a title of 2 to 5 words, in the message's language. Reply with the title only.",
-              ),
+              "\n\nGive the room a title of 2 to 5 words, in the message's language. Reply with the title only.",
             ],
           },
         ],

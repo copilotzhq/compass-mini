@@ -15,9 +15,9 @@
     "typecheck": "tsc -p . && tsc -p web"
   },
   "dependencies": {
-    "@copilotz/chat-adapter": "^0.82.1",
-    "@copilotz/chat-ui": "^0.82.1",
-    "@copilotz/copilotz": "npm:@jsr/copilotz__copilotz@^0.82.3",
+    "@copilotz/chat-adapter": "^0.82.2",
+    "@copilotz/chat-ui": "^0.82.2",
+    "@copilotz/copilotz": "npm:@jsr/copilotz__copilotz@^0.82.5",
     "@electric-sql/pglite": "^0.4.6",
     "@hono/node-server": "^2.1.3",
     "react": "^19.3.0",

@@ -79,6 +79,15 @@ export function createApp() {
       webToolsPlugin,
       roomTitlesPlugin,
     ],
+    // A background Processor (like the room titles) fails without touching the
+    // conversation, so nothing else reports it. This logs why.
+    onDeliveryDiagnostic(diagnostic) {
+      if (diagnostic.phase === "worker_handler_settled" && diagnostic.error) {
+        console.error(
+          `${diagnostic.consumerId} ${diagnostic.status}: ${diagnostic.error.name}: ${diagnostic.error.message}`,
+        );
+      }
+    },
     resources: {
       agents,
       promptInstructions: { shared: sharedInstructions },
